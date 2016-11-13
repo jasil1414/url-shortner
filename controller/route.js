@@ -12,7 +12,7 @@ router.get('/',function(req,res){
 //request to shorten the URL
 router.get('/new/:requrl*', function(req,res){
   var req_url = req.url.slice(5,req.url.length);//get the URL portion after /new/
-  console.log(req_url);
+  console.log('Request URL: '+req_url);
 
   var urlMatcher = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
   //regex to check for valid url
@@ -63,13 +63,15 @@ router.get('/new/:requrl*', function(req,res){
   });
 });
 
-router.get('/:shorturl*', function(req, res){
-  console.log(req.params.shorturl);
-  linkGenStore.findOne({"shortURL":'https://jasil1414-urlshortner.herokuapp.com'+req.url}, function(err,data){//get the original url from shortened url
-    if(err) throw err;
-    var redirect_url = data.requestURL;
-    return res.redirect(redirect_url);//redirect to original url
-  });
+router.get('/:shorturl', function(req, res,next){
+    console.log('Short URL: '+req.params.shorturl);
+    linkGenStore.findOne({"shortURL":'https://jasil1414-urlshortner.herokuapp.com/'+ req.params.shorturl}, function(err,data){//get the original url from shortened url
+      if(err) throw err;
+      if(data){
+        var redirect_url = data.requestURL;
+        return res.redirect(redirect_url);//redirect to original url
+      }
+    });
 });
 
 module.exports = router;
