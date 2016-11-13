@@ -65,10 +65,10 @@ router.get('/new/:requrl*', function(req,res){
 
 router.get('/:shorturl*', function(req, res){
   console.log(req.url);
-  linkGenStore.findOne({"shortURL":'https://jasil1414-urlshortner.herokuapp.com/'+req.url}, function(err,link){//get the original url from shortened url
+  linkGenStore.findOne({"shortURL":'https://jasil1414-urlshortner.herokuapp.com'+req.url}, function(err,link){//get the original url from shortened url
     if(err) throw err;
     var redirect_url = link.requestURL;
-    res.redirect(redirect_url);//redirect to original url
+    return res.redirect(redirect_url);//redirect to original url
   });
 });
 
