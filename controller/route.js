@@ -64,7 +64,7 @@ router.get('/new/:requrl*', function(req,res){
 });
 
 router.get('/:shorturl*', function(req, res){
-  console.log(req.url);
+  console.log(req.params.shorturl);
   linkGenStore.findOne({"shortURL":'https://jasil1414-urlshortner.herokuapp.com'+req.url}, function(err,data){//get the original url from shortened url
     if(err) throw err;
     var redirect_url = data.requestURL;
