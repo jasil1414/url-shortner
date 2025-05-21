@@ -6,7 +6,8 @@ var routes = require('./controller/route')
 var app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://test:test@ds151127.mlab.com:51127/jasil_db');
+// TODO: Replace with your actual MongoDB connection string
+mongoose.connect('YOUR_MONGODB_CONNECTION_STRING_HERE');
 
 app.set('view engine','pug');
 app.set('views', './views');
