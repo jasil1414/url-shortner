@@ -7,7 +7,8 @@ var linkSchema = new Schema({
 });
 
 linkSchema.methods.genURL = function(){
-  var genUrl="https://jasil1414-urlshortner.herokuapp.com/";//heroku prefix link
+  var baseUrl = process.env.BASE_URL || "http://localhost:3000/";
+  var genUrl = baseUrl;
   var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"//generate url based on these characters
   for(i=0; i<=6; i++){//6 characters
     genUrl += possible.charAt(Math.floor(Math.random()*possible.length));
